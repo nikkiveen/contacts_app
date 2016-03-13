@@ -1,0 +1,8 @@
+<h1>All Contacts</h1>
+<h2><%= link_to "Add A New Contact", "/contacts/new" %></h2>
+<% @contact_list.each do |contact| %>
+  <h3><%= link_to "#{contact.first_name} #{contact.last_name}", "/contacts/#{@contact_id}" %></h3>
+  <p><%= contact.email %></p>
+  <p><%= contact.phone_number %></p>
+  <br>
+<% end %>
