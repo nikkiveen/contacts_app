@@ -1,6 +1,8 @@
 class ContactsController < ApplicationController
   def index
-    @contact_list = Contact.all
+    if current_user
+      @contact_list = Contact.where(user_id: current_user.id)
+    end
     render 'index.html.erb'
   end
 
@@ -9,7 +11,11 @@ class ContactsController < ApplicationController
   end
 
   def create
-    @coordinates = Geocoder.coordinates(params[:address])
+    @coordinates = [0, 0]
+
+    if true
+      @coordinates = Geocoder.coordinates(params[:address])
+    end
 
     Contact.create(
       first_name: params[:first_name],
@@ -17,7 +23,7 @@ class ContactsController < ApplicationController
       email: params[:email],
       phone_number: params[:phone_number],
       latitude: @coordinates[0],
-      longitude: @coordinates[1]
+      longitude: @coordinates[1],
       user_id: current_user.id
     )
 
