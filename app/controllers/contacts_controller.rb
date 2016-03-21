@@ -1,8 +1,11 @@
 class ContactsController < ApplicationController
   def index
     if current_user
-      @contact_list = Contact.where(user_id: current_user.id)
+      @contact_list = current_user.contacts
+    else
+      redirect_to "/users/sign_in"
     end
+
     render 'index.html.erb'
   end
 
@@ -11,17 +14,19 @@ class ContactsController < ApplicationController
   end
 
   def create
-    @coordinates = [0, 0]
-
-    if true
+    if params[:address] == ''
       @coordinates = Geocoder.coordinates(params[:address])
+    else
+      @coordinates = [0.00, -0.00]
     end
 
     Contact.create(
       first_name: params[:first_name],
+      middle_name: params[:middle_name],
       last_name: params[:last_name],
       email: params[:email],
       phone_number: params[:phone_number],
+      bio: params[:bio],
       latitude: @coordinates[0],
       longitude: @coordinates[1],
       user_id: current_user.id
@@ -31,8 +36,13 @@ class ContactsController < ApplicationController
   end
 
   def show
-    @contact_id = params[:id]
-    @contact = Contact.find_by(id: @contact_id)
+    if current_user
+      @contact_id = params[:id]
+      @contact = Contact.find_by(id: @contact_id)
+    else 
+      redirct_to '/users.sign_in'
+    end
+    
     render 'show.html.erb'
   end
 
