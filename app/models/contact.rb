@@ -5,7 +5,11 @@ class Contact < ActiveRecord::Base
   end
 
   def full_name
-    user_full_name = "#{first_name} #{last_name}"
+    if middle_name
+      user_full_name = "#{first_name} #{middle_name} #{last_name}"
+    else
+      user_full_name = "#{first_name} #{last_name}"
+    end
   end
 
   def phone_japan
