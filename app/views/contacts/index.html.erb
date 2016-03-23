@@ -1,5 +1,36 @@
 <h1>All Contacts</h1>
 <h2><%= link_to "Add A New Contact", "/contacts/new" %></h2><br />
+
+<div class="row">
+  <br />
+</div>
+
+<div class="row">
+  <div class="col-md-10">
+  </div>
+  <div class="col-md-2">
+    <div class="btn-group">
+      <button type="button" class="btn btn-default">Filter Results</button>
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <ul class="dropdown-menu">
+        <% Group.all.each do |group| %>
+          <li><a href="/contacts?group=<%= group.name %>">Show <%= group.name %></a></li>
+        <% end %>
+          <li role="separator" class="divider"></li>
+          <li><a href="/contacts">Show All Contacts</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+ <br />
+</div>
+
+
 <% @contact_list.each do |contact| %>
   <h3><%= link_to "#{contact.full_name}", "/contacts/#{contact.id}" %></h3>
   <p><%= contact.email %></p>

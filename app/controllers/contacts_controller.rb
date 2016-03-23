@@ -1,12 +1,14 @@
 class ContactsController < ApplicationController
-  def index
+  def indexxxxxxxx
     if current_user
-      @contact_list = current_user.contacts
+      if params[:category]
+        @contact_list = current_user.Group.find_by(name: params[:group]).contacts
+      else
+        @contact_list = current_user.contacts
+      end
     else
       redirect_to "/users/sign_in"
     end
-
-    render 'index.html.erb'
   end
 
   def new
